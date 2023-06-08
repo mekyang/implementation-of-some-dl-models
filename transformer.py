@@ -232,7 +232,8 @@ def get_pad_mask(seq, pad_idx):
     return (seq != pad_idx).unsqueeze(-2)
 
 #未来信息掩码，只用于在encoder-decoder attention中用来掩盖未来信息
-#在训练解码过程中不能使用之后的信息，因为实际场景中也大概率看不到未来信息
+#在训练解码过程中不能使用之后的信息，因为实际场景中也大概率看不到未来信息，
+#在训练时如果不掩盖未来信息导致模型预测过度依赖于未来信息，实战时无未来信息可以获得
 #生成下三角矩阵
 def get_subsequent_mask(seq):
     sz_b, len_s = seq.size()
